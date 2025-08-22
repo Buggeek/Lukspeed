@@ -1,0 +1,20 @@
+{
+  "data_quality": {
+    "total_records": 6308,
+    "power_coverage": 0.6052631578947368,
+    "speed_coverage": 0.8403614457831325,
+    "duration_minutes": 105.13333333333334
+  },
+  "performance": {
+    "avg_power": 191.58905185961237,
+    "max_power": 496,
+    "avg_speed_kmh": 16.103693039049197
+  },
+  "physical_analysis": {
+    "avg_power_aero": 7.150458919004925,
+    "avg_power_rr": 13.441351271481992,
+    "avg_power_gravity": 167.90366229668012,
+    "validation_mae": 91.22038252434237,
+    "validation_within_10w": 11.146079202727512
+  }
+}

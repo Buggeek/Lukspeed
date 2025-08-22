@@ -1,0 +1,103 @@
+{
+  "validation_timestamp": "2024-08-22",
+  "overall_results": {
+    "success_rate": 77.77777777777779,
+    "total_tests": 9,
+    "total_passed": 7,
+    "assessment": "NEEDS_REVIEW"
+  },
+  "scenario_tests": [
+    {
+      "scenario": "Flat Road - Steady Speed",
+      "manual_calculations": {
+        "power_aero": 106.34,
+        "power_rr": 33.93,
+        "power_gravity": 0.0,
+        "power_total": 140.26
+      },
+      "parameters": {
+        "speed_ms": 8.333333333333334,
+        "total_mass": 83,
+        "CdA": 0.3,
+        "Crr": 0.005,
+        "gradient": 0.0
+      },
+      "validation": {
+        "in_expected_range": true,
+        "expected_range": [
+          120,
+          180
+        ]
+      }
+    },
+    {
+      "scenario": "Moderate Climb",
+      "manual_calculations": {
+        "power_aero": 36.76,
+        "power_rr": 27.14,
+        "power_gravity": 225.89,
+        "power_total": 289.79
+      },
+      "parameters": {
+        "speed_ms": 5.555555555555555,
+        "total_mass": 83,
+        "CdA": 0.35,
+        "Crr": 0.006,
+        "gradient": 0.05
+      },
+      "validation": {
+        "in_expected_range": false,
+        "expected_range": [
+          200,
+          280
+        ]
+      }
+    },
+    {
+      "scenario": "Fast Flat",
+      "manual_calculations": {
+        "power_aero": 299.07,
+        "power_rr": 40.71,
+        "power_gravity": 0.0,
+        "power_total": 339.78
+      },
+      "parameters": {
+        "speed_ms": 12.5,
+        "total_mass": 83,
+        "CdA": 0.25,
+        "Crr": 0.004,
+        "gradient": 0.0
+      },
+      "validation": {
+        "in_expected_range": true,
+        "expected_range": [
+          280,
+          350
+        ]
+      }
+    }
+  ],
+  "formula_tests": {
+    "aerodynamic": {
+      "power_calculated": 492.3000257201646,
+      "valid": false
+    },
+    "rolling_resistance": {
+      "power_calculated": 33.92625,
+      "valid": true
+    },
+    "gravitational": {
+      "power_calculated": 225.89281024569655,
+      "valid": true
+    }
+  },
+  "edge_case_tests": {
+    "zero_speed": true,
+    "high_drag": true,
+    "downhill": true
+  },
+  "physics_constants": {
+    "gravity": 9.81,
+    "air_gas_constant": 287.058
+  }
+}

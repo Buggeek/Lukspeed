@@ -1,0 +1,65 @@
+{
+  "domain": "lukspeed.com",
+  "verification_timestamp": "2025-08-22T12:30:19.930845",
+  "verification_method": "Python Native (socket + urllib)",
+  "dns_resolution": {
+    "lukspeed.com": {
+      "resolved": true,
+      "ip_addresses": [
+        "76.76.19.61"
+      ],
+      "hostname": "lukspeed.com",
+      "aliases": [],
+      "hosting_provider": "Vercel"
+    },
+    "www.lukspeed.com": {
+      "resolved": true,
+      "ip_addresses": [
+        "76.76.21.142",
+        "66.33.60.66"
+      ],
+      "hostname": "cname.vercel-dns.com",
+      "aliases": [
+        "www.lukspeed.com"
+      ],
+      "hosting_provider": "Vercel"
+    }
+  },
+  "connectivity": {
+    "HTTP": {
+      "status": "CLOSED",
+      "port": 80,
+      "error_code": 11
+    },
+    "HTTPS": {
+      "status": "CLOSED",
+      "port": 443,
+      "error_code": 11
+    }
+  },
+  "http_response": {
+    "http://lukspeed.com": {
+      "status": "URL_ERROR",
+      "error": "<urlopen error timed out>"
+    },
+    "https://lukspeed.com": {
+      "status": "URL_ERROR",
+      "error": "<urlopen error timed out>"
+    }
+  },
+  "propagation_estimation": {
+    "total_attempts": 5,
+    "successful_resolutions": 5,
+    "unique_ips": [
+      "76.76.19.61"
+    ],
+    "consistency": true,
+    "success_rate": 100.0,
+    "estimated_status": "STABLE"
+  },
+  "overall_status": "\ud83d\udd04 DNS RESOLVED - Service Starting",
+  "recommendations": [
+    "Deploy application to hosting provider (Vercel/Netlify)"
+  ],
+  "status_details": "DNS working, waiting for web services"
+}
