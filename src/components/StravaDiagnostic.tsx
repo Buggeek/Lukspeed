@@ -53,8 +53,8 @@ export default function StravaDiagnostic() {
       report.push('\n1. ENVIRONMENT VARIABLES CHECK');
       report.push('-'.repeat(40));
       
-      const clientId = import.meta.env.VITE_STRAVA_CLIENT_ID;
-      const clientSecret = import.meta.env.VITE_STRAVA_CLIENT_SECRET;
+      const clientId = import.meta.env.STRAVA_CLIENT_ID;
+      const clientSecret = import.meta.env.STRAVA_CLIENT_SECRET;
       const accessToken = import.meta.env.VITE_STRAVA_ACCESS_TOKEN;
       const appUrl = import.meta.env.VITE_APP_URL;
       
@@ -62,7 +62,7 @@ export default function StravaDiagnostic() {
         addResult('Environment: Client ID', 'success', `Found: ${clientId}`);
         report.push(`✅ Client ID: ${clientId}`);
       } else {
-        addResult('Environment: Client ID', 'error', 'VITE_STRAVA_CLIENT_ID not found in environment');
+        addResult('Environment: Client ID', 'error', 'STRAVA_CLIENT_ID not found in environment');
         report.push(`❌ Client ID: NOT FOUND`);
       }
       
@@ -70,7 +70,7 @@ export default function StravaDiagnostic() {
         addResult('Environment: Client Secret', 'success', `Found: ${clientSecret.substring(0, 8)}...`);
         report.push(`✅ Client Secret: ${clientSecret.substring(0, 8)}... (${clientSecret.length} chars)`);
       } else {
-        addResult('Environment: Client Secret', 'error', 'VITE_STRAVA_CLIENT_SECRET not found');
+        addResult('Environment: Client Secret', 'error', 'STRAVA_CLIENT_SECRET not found');
         report.push(`❌ Client Secret: NOT FOUND`);
       }
       
@@ -133,7 +133,7 @@ export default function StravaDiagnostic() {
       report.push('-'.repeat(40));
       
       try {
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseUrl = import.meta.env.NEXT_PUBLIC_SUPABASE_URL;
         if (supabaseUrl) {
           const functionUrl = `${supabaseUrl}/functions/v1/strava_oauth?action=get_auth_url`;
           report.push(`🔗 Function URL: ${functionUrl}`);
@@ -168,7 +168,7 @@ export default function StravaDiagnostic() {
             report.push(`❌ Function error: ${functionResponse.status}`);
           }
         } else {
-          addResult('Supabase Function', 'error', 'VITE_SUPABASE_URL not found');
+          addResult('Supabase Function', 'error', 'NEXT_PUBLIC_SUPABASE_URL not found');
           report.push(`❌ Supabase URL not configured`);
         }
       } catch (error) {
