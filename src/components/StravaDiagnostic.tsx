@@ -133,7 +133,7 @@ export default function StravaDiagnostic() {
       report.push('-'.repeat(40));
       
       try {
-        const supabaseUrl = import.meta.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
         if (supabaseUrl) {
           const functionUrl = `${supabaseUrl}/functions/v1/strava_oauth?action=get_auth_url`;
           report.push(`🔗 Function URL: ${functionUrl}`);
@@ -168,7 +168,7 @@ export default function StravaDiagnostic() {
             report.push(`❌ Function error: ${functionResponse.status}`);
           }
         } else {
-          addResult('Supabase Function', 'error', 'NEXT_PUBLIC_SUPABASE_URL not found');
+          addResult('Supabase Function', 'error', 'PUBLIC_SUPABASE_URL not found');
           report.push(`❌ Supabase URL not configured`);
         }
       } catch (error) {

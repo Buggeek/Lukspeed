@@ -2,8 +2,8 @@
 export const ENV = {
   // Supabase Configuration
   SUPABASE: {
-    URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+    URL: process.env.PUBLIC_SUPABASE_URL || '',
+    ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY || '',
   },
   
   // Strava Configuration
@@ -15,8 +15,8 @@ export const ENV = {
   // Environment validation
   validate() {
     const required = [
-      'NEXT_PUBLIC_SUPABASE_URL',
-      'NEXT_PUBLIC_SUPABASE_ANON_KEY', 
+      'PUBLIC_SUPABASE_URL',
+      'PUBLIC_SUPABASE_ANON_KEY', 
       'STRAVA_CLIENT_ID',
       'STRAVA_CLIENT_SECRET'
     ];

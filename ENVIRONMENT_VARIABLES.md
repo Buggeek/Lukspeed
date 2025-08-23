@@ -3,15 +3,15 @@
 ## 🔧 Current Production Variables (Vercel)
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://tebrbispkzjtlilpquaz.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_i3pdpa16MmaV8M8d-8egqw_jPg4LAnG
+PUBLIC_SUPABASE_URL=https://tebrbispkzjtlilpquaz.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=sb_publishable_i3pdpa16MmaV8M8d-8egqw_jPg4LAnG
 STRAVA_CLIENT_ID=43486
 STRAVA_CLIENT_SECRET=fcc023f20b271ba15bd45eb219a5fecbbcf4b752
 ```
 
 ## 📋 Variable Naming Convention
 
-- **PUBLIC VARS:** Use `NEXT_PUBLIC_*` prefix (accessible in browser)
+- **PUBLIC VARS:** Use `PUBLIC_*` prefix (accessible in browser)
 - **SERVER VARS:** Use direct names (server-side only)
 - **CONSISTENCY:** Always use same format across all files
 
@@ -20,7 +20,7 @@ STRAVA_CLIENT_SECRET=fcc023f20b271ba15bd45eb219a5fecbbcf4b752
 1. **Centralized Config:** Use `src/config/environment.ts`
 2. **Validation:** Check all required vars on app start
 3. **Documentation:** Update this file when adding variables
-4. **No Mixing:** Stick to one naming convention
+4. **Simple Naming:** PUBLIC_ prefix for public vars
 5. **TypeScript:** Strong typing for environment variables
 
 ## 🔧 Usage Example
