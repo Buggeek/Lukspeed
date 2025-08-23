@@ -1,225 +1,119 @@
 import { useState, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
-import { logger } from '@/services/Logger';
-
-interface UserProfile {
-  user_id: string;
-  strava_id?: number;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  weight?: number;
-  height?: number;
-  ftp?: number;
-  max_hr?: number;
-  profile_complete?: boolean;
-  preferred_units?: 'metric' | 'imperial';
-  experience_level?: 'beginner' | 'intermediate' | 'advanced';
-}
-
-export interface AuthState {
-  user: User | null;
-  loading: boolean;
-  isAuthenticated: boolean;
-  profile: UserProfile | null;
-}
 
 export function useAuth() {
-  const [authState, setAuthState] = useState<AuthState>({
-    user: null,
-    loading: true,
-    isAuthenticated: false,
-    profile: null
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Get initial session
-    const getInitialSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
-      if (error) {
-        console.error('Error getting session:', error);
-        setAuthState(prev => ({ ...prev, loading: false }));
-        return;
-      }
-
-      const user = session?.user || null;
-      let profile = null;
-
-      if (user) {
-        const { data: profileData } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-        
-        profile = profileData;
-      }
-
-      setAuthState({
-        user,
-        loading: false,
-        isAuthenticated: !!user,
-        profile
-      });
-    };
-
     getInitialSession();
-
+    
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.id);
+        console.log('🔄 Auth state change:', event, session?.user?.email, session?.user?.app_metadata?.provider);
         
-        const user = session?.user || null;
-        let profile = null;
-
-        if (user) {
-          const { data: profileData } = await supabase
-            .from('user_profiles')
-            .select('*')
-            .eq('user_id', user.id)
-            .single();
+        if (session?.user) {
+          setUser(session.user);
           
-          profile = profileData;
+          // Si es primera vez con OAuth Strava, asegurar perfil
+          if (event === 'SIGNED_IN' && session.user.app_metadata?.provider === 'strava') {
+            await ensureOAuthProfile(session.user, session);
+          }
+        } else {
+          setUser(null);
         }
-
-        setAuthState({
-          user,
-          loading: false,
-          isAuthenticated: !!user,
-          profile
-        });
+        
+        setLoading(false);
       }
     );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const signInWithEmail = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-    return { data, error };
+  const getInitialSession = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        setUser(session.user);
+        console.log('✅ Sesión inicial encontrada:', {
+          email: session.user.email,
+          provider: session.user.app_metadata?.provider
+        });
+      }
+    } catch (error) {
+      console.error('❌ Error obteniendo sesión inicial:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signUpWithEmail = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password
-    });
-    return { data, error };
+  const ensureOAuthProfile = async (user: User, session: any) => {
+    try {
+      console.log('🔄 Verificando perfil OAuth para usuario:', user.id);
+      
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (!profile) {
+        console.log('🆕 Creando perfil OAuth automático...');
+        
+        const stravaData = {
+          athlete_id: user.user_metadata?.provider_id,
+          access_token: session.provider_token,
+          refresh_token: session.provider_refresh_token,
+          expires_at: session.provider_expires_at
+        };
+
+        await supabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            email: user.email,
+            full_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email,
+            strava_athlete_id: stravaData.athlete_id?.toString(),
+            strava_access_token: stravaData.access_token,
+            strava_refresh_token: stravaData.refresh_token,
+            strava_token_expires_at: stravaData.expires_at ? new Date(stravaData.expires_at * 1000).toISOString() : null,
+            auth_provider: 'strava',
+            onboarding_completed: true
+          });
+        
+        console.log('✅ Perfil OAuth creado automáticamente');
+      } else {
+        console.log('✅ Perfil OAuth ya existe');
+      }
+    } catch (error) {
+      console.error('❌ Error asegurando perfil OAuth:', error);
+    }
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return { error };
-  };
-
-  const connectStrava = async () => {
-    logger.stravaInfo('Starting Strava connection process');
-    
     try {
-      // First ensure user is authenticated
-      logger.stravaDebug('Checking user session');
-      const { data: { session } } = await supabase.auth.getSession();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
       
-      if (!session?.access_token) {
-        logger.stravaError('User not authenticated - no session found');
-        throw new Error('User not authenticated');
-      }
-      
-      logger.stravaInfo('User session found', { 
-        userId: session.user?.id,
-        hasAccessToken: !!session.access_token 
-      });
-
-      // Get Strava auth URL
-      const url = 'https://tebrbispkzjtlilpquaz.supabase.co/functions/v1/strava_oauth?action=get_auth_url';
-      const payload = {
-        user_token: session.access_token,
-        redirect_uri: `${window.location.origin}/auth/callback`
-      };
-
-      logger.stravaDebug('Making request to get Strava auth URL', {
-        url,
-        payload: { ...payload, user_token: '[REDACTED]' }
-      });
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      logger.stravaDebug('Received response from auth URL endpoint', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        logger.stravaError('Failed to get Strava auth URL', new Error(errorText), {
-          status: response.status,
-          statusText: response.statusText,
-          responseBody: errorText
-        });
-        throw new Error(`Failed to get Strava auth URL: ${response.status} ${response.statusText}`);
-      }
-
-      const responseData = await response.json();
-      logger.stravaInfo('Successfully got Strava auth URL', {
-        hasAuthUrl: !!responseData.auth_url
-      });
-      
-      if (!responseData.auth_url) {
-        logger.stravaError('No auth_url in response', new Error('Invalid response'), responseData);
-        throw new Error('No auth URL received from server');
-      }
-
-      logger.stravaInfo('Redirecting to Strava OAuth', {
-        authUrl: responseData.auth_url
-      });
-      
-      // Redirect to Strava
-      window.location.href = responseData.auth_url;
-      
+      setUser(null);
+      console.log('✅ Usuario desconectado exitosamente');
     } catch (error) {
-      logger.stravaError('Error in connectStrava process', error as Error, {
-        userAgent: navigator.userAgent,
-        currentUrl: window.location.href
-      });
+      console.error('❌ Error desconectando usuario:', error);
       throw error;
     }
   };
 
-  const refreshProfile = async () => {
-    if (!authState.user) return;
-
-    const { data: profileData } = await supabase
-      .from('user_profiles')
-      .select('*')
-      .eq('user_id', authState.user.id)
-      .single();
-
-    setAuthState(prev => ({
-      ...prev,
-      profile: profileData
-    }));
-  };
-
   return {
-    ...authState,
-    signInWithEmail,
-    signUpWithEmail,
+    user,
+    loading,
     signOut,
-    connectStrava,
-    refreshProfile
+    isAuthenticated: !!user,
+    isStravaUser: user?.app_metadata?.provider === 'strava'
   };
 }
