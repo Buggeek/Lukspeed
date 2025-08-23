@@ -22,6 +22,9 @@ export default function StravaAuthButton() {
       const scopes = encodeURIComponent('read,activity:read_all');
       const state = encodeURIComponent(Math.random().toString(36).substring(7));
       
+      // Store state for validation (optional)
+      sessionStorage.setItem('strava_oauth_state', decodeURIComponent(state));
+      
       // Manual Strava OAuth URL construction
       const stravaAuthUrl = `https://www.strava.com/oauth/authorize?` +
         `client_id=${stravaClientId}&` +
