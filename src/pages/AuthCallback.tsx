@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { logger } from '@/services/Logger';
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -12,67 +13,115 @@ export default function AuthCallback() {
   }, []);
 
   const handleAuthCallback = async () => {
+    const timerId = logger.startTimer('Strava OAuth Callback Processing');
+    
     try {
-      console.log('🔄 Procesando callback OAuth de Strava...');
+      logger.authInfo('Processing manual Strava callback', {
+        component: 'AuthCallback',
+        action: 'handleAuthCallback',
+        data: { url: window.location.href }
+      });
       
-      // Obtener la sesión desde la URL
-      const { data: { session }, error } = await supabase.auth.getSession();
-
+      // Obtener parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const state = urlParams.get('state');
+      const error = urlParams.get('error');
+      
       if (error) {
-        console.error('❌ Error obteniendo sesión:', error);
-        throw error;
-      }
-
-      if (session?.user) {
-        console.log('✅ Usuario autenticado:', {
-          id: session.user.id,
-          email: session.user.email,
-          provider: session.user.app_metadata?.provider
+        logger.authError('Strava authorization error received', new Error(error), {
+          component: 'AuthCallback',
+          data: { error, state }
         });
-        
-        // Verificar si es OAuth de Strava
-        const isStravaUser = session.user.app_metadata?.provider === 'strava';
-        
-        if (isStravaUser) {
-          console.log('✅ Usuario OAuth Strava detectado');
-          
-          // Extraer datos de Strava
-          const stravaData = {
-            athlete_id: session.user.user_metadata?.provider_id,
-            access_token: session.provider_token,
-            refresh_token: session.provider_refresh_token,
-            expires_at: session.provider_expires_at
-          };
-          
-          console.log('📊 Datos Strava extraídos:', stravaData);
-          
-          // Crear o actualizar perfil
-          await ensureStravaProfile(session.user, stravaData);
-          
-          setStatus('success');
-          setMessage('¡Conectado con Strava exitosamente! Redirigiendo al dashboard narrativo...');
-          
-          // Redirigir al dashboard narrativo
-          setTimeout(() => {
-            navigate('/narrative');
-          }, 2000);
-          
-        } else {
-          // Usuario de email/password tradicional
-          console.log('📧 Usuario email tradicional');
-          setStatus('success');
-          setMessage('¡Autenticación exitosa! Redirigiendo...');
-          
-          setTimeout(() => {
-            navigate('/dashboard');
-          }, 2000);
-        }
-      } else {
-        throw new Error('No se encontró sesión activa después del OAuth');
+        throw new Error(`Strava authorization error: ${error}`);
       }
+      
+      if (!code) {
+        logger.authError('No authorization code received from Strava', new Error('Missing code parameter'), {
+          component: 'AuthCallback',
+          data: { urlParams: Object.fromEntries(urlParams.entries()) }
+        });
+        throw new Error('No authorization code received from Strava');
+      }
+      
+      logger.authInfo('Authorization code received successfully', {
+        component: 'AuthCallback',
+        data: { codeLength: code.length, state }
+      });
+      
+      setMessage('Intercambiando código por tokens...');
+      
+      // Exchange code for tokens using our edge function
+      const exchangeResponse = await fetch('https://tebrbispkzjtlilpquaz.supabase.co/functions/v1/app_dbd0941867_strava_exchange', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: code,
+          state: state
+        })
+      });
+      
+      if (!exchangeResponse.ok) {
+        const errorText = await exchangeResponse.text();
+        logger.authError('Token exchange failed', new Error(errorText), {
+          component: 'AuthCallback',
+          data: { status: exchangeResponse.status, statusText: exchangeResponse.statusText }
+        });
+        throw new Error(`Token exchange failed: ${errorText}`);
+      }
+      
+      const tokenData = await exchangeResponse.json();
+      logger.authInfo('Tokens received successfully', {
+        component: 'AuthCallback',
+        data: {
+          athleteId: tokenData.athlete?.id,
+          hasAccessToken: !!tokenData.access_token,
+          hasRefreshToken: !!tokenData.refresh_token
+        }
+      });
+      
+      // Create user session with Supabase using the Strava data
+      const { data: authData, error: authError } = await supabase.auth.signInAnonymously();
+      
+      if (authError) {
+        logger.authError('Failed to create Supabase session', authError, {
+          component: 'AuthCallback'
+        });
+        throw new Error(`Failed to create session: ${authError.message}`);
+      }
+      
+      logger.authInfo('Supabase session created successfully', {
+        component: 'AuthCallback',
+        data: {
+          userId: authData.user?.id,
+          email: authData.user?.email
+        }
+      });
+      
+      // Create profile with Strava data
+      await ensureStravaProfile(authData.user!, tokenData);
+      
+      logger.endTimer(timerId, 'auth', 'Strava OAuth Callback Processing');
+      
+      setStatus('success');
+      setMessage('¡Conectado con Strava exitosamente! Redirigiendo al dashboard narrativo...');
+      
+      // Redirigir al dashboard narrativo
+      setTimeout(() => {
+        navigate('/narrative');
+      }, 2000);
 
     } catch (error: any) {
-      console.error('❌ Error en callback OAuth:', error);
+      logger.authError('Auth callback processing failed', error, {
+        component: 'AuthCallback',
+        data: {
+          userAgent: navigator.userAgent,
+          currentUrl: window.location.href
+        }
+      });
+      
       setStatus('error');
       setMessage(error.message || 'Error procesando autenticación con Strava');
       
@@ -83,8 +132,13 @@ export default function AuthCallback() {
     }
   };
 
-  const ensureStravaProfile = async (user: any, stravaData: any) => {
+  const ensureStravaProfile = async (user: any, tokenData: any) => {
     try {
+      logger.authInfo('Creating/updating Strava profile', {
+        component: 'AuthCallback',
+        data: { userId: user.id, athleteId: tokenData.athlete?.id }
+      });
+      
       // Verificar si ya existe perfil
       const { data: existingProfile } = await supabase
         .from('profiles')
@@ -94,53 +148,74 @@ export default function AuthCallback() {
 
       if (!existingProfile) {
         // Crear perfil nuevo para usuario OAuth Strava
-        console.log('🆕 Creando perfil para usuario OAuth Strava...');
+        logger.authInfo('Creating new profile for Strava OAuth user', {
+          component: 'AuthCallback',
+          data: { userId: user.id }
+        });
         
         const { error: profileError } = await supabase
           .from('profiles')
           .insert({
             id: user.id,
-            email: user.email,
-            full_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email,
-            strava_athlete_id: stravaData.athlete_id?.toString(),
-            strava_access_token: stravaData.access_token,
-            strava_refresh_token: stravaData.refresh_token,
-            strava_token_expires_at: stravaData.expires_at ? new Date(stravaData.expires_at * 1000).toISOString() : null,
+            email: tokenData.athlete?.email || `athlete${tokenData.athlete?.id}@strava.local`,
+            full_name: `${tokenData.athlete?.firstname} ${tokenData.athlete?.lastname}`.trim() || 'Strava User',
+            strava_athlete_id: tokenData.athlete?.id?.toString(),
+            strava_access_token: tokenData.access_token,
+            strava_refresh_token: tokenData.refresh_token,
+            strava_token_expires_at: tokenData.expires_at ? new Date(tokenData.expires_at * 1000).toISOString() : null,
             auth_provider: 'strava',
             created_at: new Date().toISOString(),
             onboarding_completed: true // Para usuarios OAuth, completar onboarding automáticamente
           });
 
         if (profileError) {
-          console.error('❌ Error creando perfil OAuth:', profileError);
+          logger.authError('Failed to create OAuth profile', profileError, {
+            component: 'AuthCallback',
+            data: { userId: user.id }
+          });
           throw profileError;
         }
         
-        console.log('✅ Perfil OAuth Strava creado exitosamente');
+        logger.authInfo('OAuth Strava profile created successfully', {
+          component: 'AuthCallback',
+          data: { userId: user.id }
+        });
         
       } else {
         // Usuario existente - actualizar tokens de Strava
-        console.log('🔄 Usuario existente, actualizando tokens Strava...');
+        logger.authInfo('Existing user found, updating Strava tokens', {
+          component: 'AuthCallback',
+          data: { userId: user.id }
+        });
         
         const { error: updateError } = await supabase
           .from('profiles')
           .update({
-            strava_access_token: stravaData.access_token,
-            strava_refresh_token: stravaData.refresh_token,
-            strava_token_expires_at: stravaData.expires_at ? new Date(stravaData.expires_at * 1000).toISOString() : null,
+            strava_access_token: tokenData.access_token,
+            strava_refresh_token: tokenData.refresh_token,
+            strava_token_expires_at: tokenData.expires_at ? new Date(tokenData.expires_at * 1000).toISOString() : null,
             auth_provider: 'strava'
           })
           .eq('id', user.id);
 
         if (updateError) {
-          console.error('❌ Error actualizando tokens Strava:', updateError);
+          logger.authError('Failed to update Strava tokens', updateError, {
+            component: 'AuthCallback',
+            data: { userId: user.id }
+          });
           // No lanzar error, continuar con el flujo
         } else {
-          console.log('✅ Tokens Strava actualizados exitosamente');
+          logger.authInfo('Strava tokens updated successfully', {
+            component: 'AuthCallback',
+            data: { userId: user.id }
+          });
         }
       }
     } catch (error) {
-      console.error('❌ Error asegurando perfil Strava:', error);
+      logger.authError('Failed to ensure Strava profile', error as Error, {
+        component: 'AuthCallback',
+        data: { userId: user?.id }
+      });
       throw error;
     }
   };
@@ -152,7 +227,7 @@ export default function AuthCallback() {
           <>
             <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <h2 className="text-xl font-semibold mb-2">Conectando con Strava...</h2>
-            <p className="text-gray-600">Procesando tu autenticación</p>
+            <p className="text-gray-600">{message || 'Procesando tu autenticación'}</p>
           </>
         )}
 
@@ -164,7 +239,7 @@ export default function AuthCallback() {
               </svg>
             </div>
             <h2 className="text-xl font-semibold mb-2 text-green-600">¡Conectado exitosamente!</h2>
-            <p className="text-gray-600">Redirigiendo al dashboard...</p>
+            <p className="text-gray-600">{message}</p>
           </>
         )}
 
@@ -176,7 +251,7 @@ export default function AuthCallback() {
               </svg>
             </div>
             <h2 className="text-xl font-semibold mb-2 text-red-600">Error de conexión</h2>
-            <p className="text-gray-600">Redirigiendo para intentar de nuevo...</p>
+            <p className="text-gray-600">{message}</p>
           </>
         )}
       </div>

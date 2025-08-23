@@ -1,201 +1,289 @@
-export enum LogLevel {
-  DEBUG = 0,
-  INFO = 1,
-  WARN = 2,
-  ERROR = 3,
-  FATAL = 4
-}
-
 interface LogEntry {
-  id: string;
   timestamp: string;
-  level: LogLevel;
-  category: string;
+  level: 'debug' | 'info' | 'warn' | 'error' | 'critical';
+  category: 'auth' | 'sync' | 'metrics' | 'ui' | 'api' | 'performance';
   message: string;
-  data?: any;
-  stack?: string;
-  userAgent?: string;
-  url?: string;
+  context?: {
+    userId?: string;
+    sessionId?: string;
+    component?: string;
+    action?: string;
+    error?: Error;
+    performance?: {
+      startTime: number;
+      duration: number;
+    };
+    data?: any;
+  };
 }
 
-class LoggerService {
+class Logger {
+  private static instance: Logger;
   private logs: LogEntry[] = [];
-  private maxLogs = 1000;
-  private isProduction = process.env.NODE_ENV === 'production';
+  private maxLogs = 100;
+  private sessionId: string;
 
-  private createEntry(level: LogLevel, category: string, message: string, data?: any, error?: Error): LogEntry {
-    return {
-      id: crypto.randomUUID(),
+  constructor() {
+    this.sessionId = this.generateSessionId();
+    this.loadPersistedLogs();
+  }
+
+  public static getInstance(): Logger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger();
+    }
+    return Logger.instance;
+  }
+
+  private generateSessionId(): string {
+    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  private loadPersistedLogs(): void {
+    try {
+      const persistedLogs = localStorage.getItem('lukspeed_logs');
+      if (persistedLogs) {
+        this.logs = JSON.parse(persistedLogs);
+      }
+    } catch (error) {
+      console.warn('Failed to load persisted logs:', error);
+    }
+  }
+
+  private persistLogs(): void {
+    try {
+      localStorage.setItem('lukspeed_logs', JSON.stringify(this.logs.slice(-this.maxLogs)));
+    } catch (error) {
+      console.warn('Failed to persist logs:', error);
+    }
+  }
+
+  private log(level: LogEntry['level'], category: LogEntry['category'], message: string, context?: LogEntry['context']): void {
+    const entry: LogEntry = {
       timestamp: new Date().toISOString(),
       level,
       category,
       message,
-      data: data ? JSON.parse(JSON.stringify(data)) : undefined,
-      stack: error?.stack,
-      userAgent: navigator.userAgent,
-      url: window.location.href
+      context: {
+        ...context,
+        sessionId: this.sessionId,
+      }
     };
-  }
 
-  private addLog(entry: LogEntry) {
-    this.logs.unshift(entry);
+    this.logs.push(entry);
     
-    // Keep only latest logs
+    // Keep only the last maxLogs entries
     if (this.logs.length > this.maxLogs) {
-      this.logs = this.logs.slice(0, this.maxLogs);
+      this.logs = this.logs.slice(-this.maxLogs);
     }
 
-    // Store in localStorage
-    try {
-      localStorage.setItem('lukspeed_logs', JSON.stringify(this.logs.slice(0, 100)));
-    } catch (e) {
-      console.warn('Failed to store logs in localStorage:', e);
-    }
+    this.persistLogs();
+    this.consoleLog(entry);
+  }
 
-    // Console output based on level
-    const levelName = LogLevel[entry.level];
-    const prefix = `[${entry.timestamp}] [${levelName}] [${entry.category}]`;
+  private consoleLog(entry: LogEntry): void {
+    const colorMap = {
+      debug: '#8B5CF6',
+      info: '#3B82F6', 
+      warn: '#F59E0B',
+      error: '#EF4444',
+      critical: '#DC2626'
+    };
+
+    const color = colorMap[entry.level];
+    const prefix = `[${entry.category.toUpperCase()}]`;
     
-    switch (entry.level) {
-      case LogLevel.DEBUG:
-        if (!this.isProduction) console.debug(prefix, entry.message, entry.data);
-        break;
-      case LogLevel.INFO:
-        console.info(prefix, entry.message, entry.data);
-        break;
-      case LogLevel.WARN:
-        console.warn(prefix, entry.message, entry.data);
-        break;
-      case LogLevel.ERROR:
-      case LogLevel.FATAL:
-        console.error(prefix, entry.message, entry.data, entry.stack);
-        break;
+    if (entry.level === 'error' || entry.level === 'critical') {
+      console.error(
+        `%c${prefix} ${entry.message}`,
+        `color: ${color}; font-weight: bold;`,
+        entry.context
+      );
+      
+      if (entry.context?.error) {
+        console.error('Stack Trace:', entry.context.error);
+      }
+    } else if (entry.level === 'warn') {
+      console.warn(
+        `%c${prefix} ${entry.message}`,
+        `color: ${color}; font-weight: bold;`,
+        entry.context
+      );
+    } else {
+      console.log(
+        `%c${prefix} ${entry.message}`,
+        `color: ${color}; font-weight: bold;`,
+        entry.context
+      );
     }
   }
 
-  debug(category: string, message: string, data?: any) {
-    this.addLog(this.createEntry(LogLevel.DEBUG, category, message, data));
+  // Public logging methods
+  public debug(category: LogEntry['category'], message: string, context?: LogEntry['context']): void {
+    this.log('debug', category, message, context);
   }
 
-  info(category: string, message: string, data?: any) {
-    this.addLog(this.createEntry(LogLevel.INFO, category, message, data));
+  public info(category: LogEntry['category'], message: string, context?: LogEntry['context']): void {
+    this.log('info', category, message, context);
   }
 
-  warn(category: string, message: string, data?: any) {
-    this.addLog(this.createEntry(LogLevel.WARN, category, message, data));
+  public warn(category: LogEntry['category'], message: string, context?: LogEntry['context']): void {
+    this.log('warn', category, message, context);
   }
 
-  error(category: string, message: string, error?: Error, data?: any) {
-    this.addLog(this.createEntry(LogLevel.ERROR, category, message, data, error));
+  public error(category: LogEntry['category'], message: string, error?: Error, context?: LogEntry['context']): void {
+    this.log('error', category, message, {
+      ...context,
+      error
+    });
   }
 
-  fatal(category: string, message: string, error?: Error, data?: any) {
-    this.addLog(this.createEntry(LogLevel.FATAL, category, message, data, error));
+  public critical(category: LogEntry['category'], message: string, error?: Error, context?: LogEntry['context']): void {
+    this.log('critical', category, message, {
+      ...context,
+      error
+    });
   }
 
-  // Strava-specific logging methods
-  stravaDebug(message: string, data?: any) {
-    this.debug('STRAVA', message, data);
+  // Performance tracking
+  public startTimer(action: string): string {
+    const timerId = `timer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const startTime = performance.now();
+    
+    this.debug('performance', `Started timer for: ${action}`, {
+      action,
+      performance: { startTime, duration: 0 }
+    });
+
+    return timerId;
   }
 
-  stravaInfo(message: string, data?: any) {
-    this.info('STRAVA', message, data);
+  public endTimer(timerId: string, category: LogEntry['category'], action: string, context?: LogEntry['context']): void {
+    const endTime = performance.now();
+    const duration = endTime - (context?.performance?.startTime || endTime);
+
+    this.info('performance', `Completed ${action} in ${duration.toFixed(2)}ms`, {
+      ...context,
+      action,
+      performance: { startTime: endTime - duration, duration }
+    });
   }
 
-  stravaError(message: string, error?: Error, data?: any) {
-    this.error('STRAVA', message, error, data);
+  // Utility methods
+  public getLogs(category?: LogEntry['category'], level?: LogEntry['level']): LogEntry[] {
+    return this.logs.filter(log => {
+      const categoryMatch = !category || log.category === category;
+      const levelMatch = !level || log.level === level;
+      return categoryMatch && levelMatch;
+    });
   }
 
-  // Auth-specific logging methods
-  authDebug(message: string, data?: any) {
-    this.debug('AUTH', message, data);
-  }
-
-  authInfo(message: string, data?: any) {
-    this.info('AUTH', message, data);
-  }
-
-  authError(message: string, error?: Error, data?: any) {
-    this.error('AUTH', message, error, data);
-  }
-
-  // API-specific logging methods
-  apiDebug(message: string, data?: any) {
-    this.debug('API', message, data);
-  }
-
-  apiInfo(message: string, data?: any) {
-    this.info('API', message, data);
-  }
-
-  apiError(message: string, error?: Error, data?: any) {
-    this.error('API', message, error, data);
-  }
-
-  // Get logs
-  getLogs(level?: LogLevel, category?: string): LogEntry[] {
-    let filteredLogs = [...this.logs];
-
-    if (level !== undefined) {
-      filteredLogs = filteredLogs.filter(log => log.level >= level);
-    }
-
-    if (category) {
-      filteredLogs = filteredLogs.filter(log => log.category === category);
-    }
-
-    return filteredLogs;
-  }
-
-  // Export logs
-  exportLogs(): string {
+  public exportLogs(): string {
     return JSON.stringify(this.logs, null, 2);
   }
 
-  // Clear logs
-  clearLogs() {
+  public clearLogs(): void {
     this.logs = [];
     localStorage.removeItem('lukspeed_logs');
-    this.info('SYSTEM', 'Logs cleared');
+    this.info('ui', 'Logs cleared');
   }
 
-  // Load persisted logs
-  loadPersistedLogs() {
-    try {
-      const stored = localStorage.getItem('lukspeed_logs');
-      if (stored) {
-        const parsedLogs = JSON.parse(stored) as LogEntry[];
-        this.logs = parsedLogs;
-        this.info('SYSTEM', `Loaded ${parsedLogs.length} persisted logs`);
-      }
-    } catch (e) {
-      console.warn('Failed to load persisted logs:', e);
-    }
+  // Strava-specific logging methods (backward compatibility)
+  public stravaInfo(message: string, context?: any): void {
+    this.info('sync', message, { component: 'Strava', data: context });
   }
 
-  // Get system info for debugging
-  getSystemInfo() {
-    return {
-      userAgent: navigator.userAgent,
-      url: window.location.href,
-      timestamp: new Date().toISOString(),
-      localStorage: !!window.localStorage,
-      sessionStorage: !!window.sessionStorage,
-      online: navigator.onLine,
-      cookiesEnabled: navigator.cookieEnabled,
-      language: navigator.language,
-      platform: navigator.platform,
-      screenResolution: `${screen.width}x${screen.height}`,
-      viewportSize: `${window.innerWidth}x${window.innerHeight}`
-    };
+  public stravaError(message: string, error?: Error, context?: any): void {
+    this.error('sync', message, error, { component: 'Strava', data: context });
+  }
+
+  public stravaDebug(message: string, context?: any): void {
+    this.debug('sync', message, { component: 'Strava', data: context });
+  }
+
+  // Auth-specific logging methods
+  public authInfo(message: string, context?: any): void {
+    this.info('auth', message, { component: 'Auth', data: context });
+  }
+
+  public authError(message: string, error?: Error, context?: any): void {
+    this.error('auth', message, error, { component: 'Auth', data: context });
+  }
+
+  public authDebug(message: string, context?: any): void {
+    this.debug('auth', message, { component: 'Auth', data: context });
+  }
+
+  // Metrics-specific logging methods
+  public metricsInfo(message: string, context?: any): void {
+    this.info('metrics', message, { component: 'Metrics', data: context });
+  }
+
+  public metricsError(message: string, error?: Error, context?: any): void {
+    this.error('metrics', message, error, { component: 'Metrics', data: context });
+  }
+
+  public metricsDebug(message: string, context?: any): void {
+    this.debug('metrics', message, { component: 'Metrics', data: context });
   }
 }
 
-// Global logger instance
-export const logger = new LoggerService();
+// Export singleton instance
+export const logger = Logger.getInstance();
 
-// Initialize with persisted logs
-logger.loadPersistedLogs();
+// Export for React Error Boundary
+export const logError = (error: Error, errorInfo: any, component?: string) => {
+  logger.critical('ui', `React Error in ${component || 'Unknown Component'}`, error, {
+    component,
+    data: errorInfo
+  });
+};
 
-// Log system startup
-logger.info('SYSTEM', 'Logger initialized', logger.getSystemInfo());
+// Performance decorator for functions
+export const withPerformanceLogging = <T extends (...args: any[]) => any>(
+  fn: T,
+  category: LogEntry['category'],
+  actionName: string
+): T => {
+  return ((...args: any[]) => {
+    const startTime = performance.now();
+    
+    try {
+      const result = fn(...args);
+      
+      if (result instanceof Promise) {
+        return result
+          .then((value) => {
+            const duration = performance.now() - startTime;
+            logger.info('performance', `${actionName} completed in ${duration.toFixed(2)}ms`, {
+              action: actionName,
+              performance: { startTime, duration }
+            });
+            return value;
+          })
+          .catch((error) => {
+            const duration = performance.now() - startTime;
+            logger.error('performance', `${actionName} failed after ${duration.toFixed(2)}ms`, error, {
+              action: actionName,
+              performance: { startTime, duration }
+            });
+            throw error;
+          });
+      } else {
+        const duration = performance.now() - startTime;
+        logger.info('performance', `${actionName} completed in ${duration.toFixed(2)}ms`, {
+          action: actionName,
+          performance: { startTime, duration }
+        });
+        return result;
+      }
+    } catch (error) {
+      const duration = performance.now() - startTime;
+      logger.error('performance', `${actionName} failed after ${duration.toFixed(2)}ms`, error as Error, {
+        action: actionName,
+        performance: { startTime, duration }
+      });
+      throw error;
+    }
+  }) as T;
+};
