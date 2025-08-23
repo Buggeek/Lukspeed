@@ -23,6 +23,7 @@ import NotFound from './pages/NotFound';
 import ActivityTimeline from './pages/ActivityTimeline';
 import PhysicalAnalysis from './pages/PhysicalAnalysis';
 import NarrativeDashboard from './pages/NarrativeDashboard';
+import WebhookAdminPage from './pages/WebhookAdminPage';
 
 const queryClient = new QueryClient();
 
@@ -150,6 +151,11 @@ const App = () => (
               <ResponsiveLayout>
                 <NarrativeDashboard />
               </ResponsiveLayout>
+            </AuthProtectedRoute>
+          } />
+          <Route path="/admin/webhooks" element={
+            <AuthProtectedRoute>
+              <WebhookAdminPage />
             </AuthProtectedRoute>
           } />
           
