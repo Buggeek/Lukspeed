@@ -22,6 +22,7 @@ import IngestMonitorPage from './pages/IngestMonitor';
 import NotFound from './pages/NotFound';
 import ActivityTimeline from './pages/ActivityTimeline';
 import PhysicalAnalysis from './pages/PhysicalAnalysis';
+import NarrativeDashboard from './pages/NarrativeDashboard';
 
 const queryClient = new QueryClient();
 
@@ -141,6 +142,13 @@ const App = () => (
             <AuthProtectedRoute>
               <ResponsiveLayout>
                 <PhysicalAnalysis />
+              </ResponsiveLayout>
+            </AuthProtectedRoute>
+          } />
+          <Route path="/narrative" element={
+            <AuthProtectedRoute>
+              <ResponsiveLayout>
+                <NarrativeDashboard />
               </ResponsiveLayout>
             </AuthProtectedRoute>
           } />
