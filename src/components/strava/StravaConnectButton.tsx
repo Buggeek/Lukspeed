@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExternalLink, Loader2 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
 interface StravaConnectButtonProps {
   onConnect?: () => void;
@@ -10,16 +12,16 @@ interface StravaConnectButtonProps {
 
 export function StravaConnectButton({ onConnect, isConnected = false }: StravaConnectButtonProps) {
   const [isConnecting, setIsConnecting] = useState(false);
+  const { connectStrava } = useAuth();
 
   const handleConnect = async () => {
     setIsConnecting(true);
     try {
-      // In a real implementation, this would call the API to initiate OAuth
-      // For now, we'll simulate the process
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await connectStrava();
       onConnect?.();
     } catch (error) {
       console.error('Failed to connect to Strava:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to connect to Strava');
     } finally {
       setIsConnecting(false);
     }

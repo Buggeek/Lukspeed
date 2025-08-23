@@ -3,11 +3,26 @@ import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { logger } from '@/services/Logger';
 
+interface UserProfile {
+  user_id: string;
+  strava_id?: number;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  weight?: number;
+  height?: number;
+  ftp?: number;
+  max_hr?: number;
+  profile_complete?: boolean;
+  preferred_units?: 'metric' | 'imperial';
+  experience_level?: 'beginner' | 'intermediate' | 'advanced';
+}
+
 export interface AuthState {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
-  profile: any | null;
+  profile: UserProfile | null;
 }
 
 export function useAuth() {
