@@ -2,7 +2,10 @@ import React from 'react';
 import { StoryHeader } from '@/components/narrative/StoryHeader';
 import { MetricStoryCard } from '@/components/narrative/MetricStoryCard';
 import { useMetricNarrative } from '@/hooks/narrative/useMetricNarrative';
+import { useRealStravaMetrics } from '@/hooks/narrative/useRealStravaMetrics';
 import { PersonalizedRecommendations } from '@/components/narrative/PersonalizedRecommendations';
+import { DataSourceIndicator } from '@/components/narrative/DataSourceIndicator';
+import { OfflineIndicator } from '@/components/narrative/OfflineIndicator';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Share2 } from 'lucide-react';
@@ -12,8 +15,9 @@ export default function NarrativeDashboard() {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
   
-  // Use real data if authenticated, otherwise mock data
-  const metrics = useMetricNarrative(isAuthenticated);
+  // Use real Strava data if authenticated
+  const realStravaMetrics = useRealStravaMetrics();
+  const fallbackMetrics = useMetricNarrative(false); // Always use fallback as backup
 
   if (!isAuthenticated) {
     return (
@@ -37,6 +41,25 @@ export default function NarrativeDashboard() {
     );
   }
 
+  // Show loading during initial sync
+  if (realStravaMetrics.isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="text-gray-600">
+            {realStravaMetrics.syncStatus === 'syncing' 
+              ? 'Sincronizando con Strava...' 
+              : 'Cargando tu dashboard narrativo...'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Use real data if available, otherwise fallback
+  const metricsToShow = realStravaMetrics.metrics || fallbackMetrics;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
       
@@ -54,7 +77,9 @@ export default function NarrativeDashboard() {
             </Button>
             <div>
               <h1 className="font-semibold text-gray-900">Tu Progreso</h1>
-              <p className="text-xs text-gray-500">Última actividad hace 2 horas</p>
+              <p className="text-xs text-gray-500">
+                {realStravaMetrics.isRealData ? 'Datos reales de Strava' : 'Datos de ejemplo'}
+              </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -67,9 +92,23 @@ export default function NarrativeDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Indicador de fuente de datos */}
+      <DataSourceIndicator 
+        isReal={realStravaMetrics.isRealData}
+        error={realStravaMetrics.error}
+        syncStatus={realStravaMetrics.syncStatus}
+        onRefresh={realStravaMetrics.refresh}
+      />
+      
+      {/* Indicador offline */}
+      <OfflineIndicator />
       
       {/* Story Header - Main narrative summary */}
-      <StoryHeader />
+      <StoryHeader 
+        metrics={metricsToShow}
+        isRealData={realStravaMetrics.isRealData}
+      />
       
       {/* Metric Story Cards - Individual narratives */}
       <div className="pb-8">
@@ -78,22 +117,29 @@ export default function NarrativeDashboard() {
             Análisis Detallado
           </h2>
           <p className="text-sm text-gray-600">
-            Toca cada métrica para conocer más detalles
+            {realStravaMetrics.isRealData 
+              ? 'Basado en tus actividades reales de Strava'
+              : 'Toca cada métrica para conocer más detalles'
+            }
           </p>
         </div>
         
         <div className="space-y-0">
-          {metrics.map((metric, index) => (
+          {metricsToShow.map((metric, index) => (
             <MetricStoryCard 
               key={`${metric.type}-${index}`} 
-              metric={metric} 
+              metric={metric}
+              isRealData={realStravaMetrics.isRealData}
             />
           ))}
         </div>
       </div>
 
       {/* Personalized Recommendations */}
-      <PersonalizedRecommendations metrics={metrics} />
+      <PersonalizedRecommendations 
+        metrics={metricsToShow}
+        isRealData={realStravaMetrics.isRealData}
+      />
 
       {/* Action Recommendations */}
       <div className="px-4 pb-8">
@@ -104,7 +150,10 @@ export default function NarrativeDashboard() {
               Próximo Objetivo
             </h3>
             <p className="text-sm text-gray-600 mb-4">
-              Basado en tu progreso actual, te recomendamos enfocar en:
+              {realStravaMetrics.isRealData 
+                ? 'Basado en tu progreso real, te recomendamos enfocar en:'
+                : 'Basado en tu progreso actual, te recomendamos enfocar en:'
+              }
             </p>
             <div className="space-y-2 text-left">
               <div className="flex items-center space-x-2 text-sm">
