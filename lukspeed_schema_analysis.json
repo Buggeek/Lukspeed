@@ -1,0 +1,7 @@
+[
+  {
+    "file": "supabase/migrations/20240821000000_system_config.sql",
+    "relevant": true,
+    "content_preview": "-- ========================================\n-- sprint 1.1: sistema de configuraci\u00f3n parametrizada\n-- ========================================\n\n-- drop existing objects if they exist\ndrop table if exists system_config cascade;\ndrop function if exists resolve_config cascade;\ndrop function if exists ge..."
+  }
+]

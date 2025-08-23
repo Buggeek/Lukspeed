@@ -1,0 +1,298 @@
+{
+  "summary": {
+    "total_categories": 7,
+    "total_indicators": 28,
+    "implemented": 6,
+    "missing": 22,
+    "partially_implemented": 0
+  },
+  "categories": {
+    "power_training_load": {
+      "category_name": "\ud83d\udd0b Power & Training Load Indicators",
+      "indicators": {
+        "ftp_estimation": {
+          "status": "implemented",
+          "files": [
+            "src/hooks/useAuth.ts",
+            "src/hooks/useMLPredictions.ts",
+            "src/hooks/useMetrics.ts",
+            "src/hooks/usePowerCurve.ts",
+            "src/lib/supabase.ts",
+            "src/services/ZoneCalculator.ts",
+            "src/types/activity.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/enhanced.ts",
+            "src/types/mlModels.ts",
+            "src/types/powerAnalysis.ts",
+            "src/types/powerAnalysis.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/auth.ts",
+            "src/utils/cycling-calculations.ts",
+            "src/utils/predictive-models.ts"
+          ],
+          "implementation": ""
+        },
+        "normalized_power": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "intensity_factor": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "tss": {
+          "status": "implemented",
+          "files": [
+            "src/hooks/useMLPredictions.ts",
+            "src/hooks/useMetrics.ts",
+            "src/hooks/useMetrics.ts",
+            "src/hooks/useMetrics.ts",
+            "src/lib/supabase.ts",
+            "src/lib/supabase.ts",
+            "src/types/activity.ts",
+            "src/types/activity.ts",
+            "src/types/activity.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/enhanced.ts",
+            "src/types/enhanced.ts",
+            "src/types/index.ts",
+            "src/types/index.ts",
+            "src/types/mlModels.ts",
+            "src/types/powerAnalysis.ts",
+            "src/types/powerAnalysis.ts",
+            "src/types/powerAnalysis.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/cycling-calculations.ts",
+            "src/utils/cycling-calculations.ts",
+            "src/utils/predictive-models.ts",
+            "src/utils/predictive-models.ts",
+            "src/utils/predictive-models.ts"
+          ],
+          "implementation": ""
+        },
+        "power_zones_distribution": {
+          "status": "implemented",
+          "files": [
+            "src/hooks/useMetrics.ts",
+            "src/hooks/useMetrics.ts",
+            "src/hooks/usePowerCurve.ts",
+            "src/hooks/usePowerCurve.ts",
+            "src/services/ZoneCalculator.ts",
+            "src/services/ZoneCalculator.ts",
+            "src/services/ZoneCalculator.ts",
+            "src/types/activity.ts",
+            "src/types/activity.ts",
+            "src/types/enhanced.ts",
+            "src/types/powerAnalysis.ts",
+            "src/types/powerAnalysis.ts",
+            "src/utils/cycling-calculations.ts"
+          ],
+          "implementation": ""
+        },
+        "w_prime_anaerobic": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "power_curve": {
+          "status": "implemented",
+          "files": [
+            "src/hooks/usePowerCurve.ts",
+            "src/hooks/usePowerCurve.ts",
+            "src/services/ZoneCalculator.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/enhanced.ts",
+            "src/types/powerAnalysis.ts",
+            "src/types/powerAnalysis.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/cycling-calculations.ts",
+            "src/utils/predictive-models.ts",
+            "src/utils/predictive-models.ts"
+          ],
+          "implementation": ""
+        }
+      }
+    },
+    "torque_cadence": {
+      "category_name": "\u2699\ufe0f Torque & Cadence Indicators",
+      "indicators": {
+        "torque_average": {
+          "status": "implemented",
+          "files": [
+            "src/hooks/useActivityData.ts",
+            "src/services/MetricsCalculator.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/timeline.ts",
+            "src/utils/advanced-calculations.ts"
+          ],
+          "implementation": ""
+        },
+        "torque_variability": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "torque_efficiency": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "optimal_cadence_terrain": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        }
+      }
+    },
+    "efficiency": {
+      "category_name": "\ud83d\udcc8 Efficiency Indicators",
+      "indicators": {
+        "speed_efficiency": {
+          "status": "implemented",
+          "files": [
+            "src/hooks/useActivityData.ts",
+            "src/hooks/useEfficiency.ts",
+            "src/hooks/useMetrics.ts",
+            "src/lib/supabase.ts",
+            "src/services/EfficiencyCurveService.ts",
+            "src/services/MetricsCalculator.ts",
+            "src/services/MetricsCalculator.ts",
+            "src/types/activity.ts",
+            "src/types/advanced-metrics.ts",
+            "src/types/bikes.ts",
+            "src/types/enhanced.ts",
+            "src/types/index.ts",
+            "src/types/powerAnalysis.ts",
+            "src/types/timeline.ts",
+            "src/utils/advanced-calculations.ts",
+            "src/utils/cycling-calculations.ts",
+            "src/utils/predictive-models.ts"
+          ],
+          "implementation": ""
+        },
+        "terrain_efficiency": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "aerodynamic_efficiency": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "metabolic_efficiency": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        }
+      }
+    },
+    "cardiac_physiological": {
+      "category_name": "\u2764\ufe0f\u200d\ud83d\udd25 Cardiac & Physiological Indicators",
+      "indicators": {
+        "cardiac_drift": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "watts_per_beat": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "calories_per_watt": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "hrr_utilization": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        }
+      }
+    },
+    "biomechanical": {
+      "category_name": "\ud83e\uddd8\u200d\u2642\ufe0f Biomechanical & Stability Indicators",
+      "indicators": {
+        "cadence_variability": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "power_balance_lr": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "biomech_stability_index": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "micro_accelerations": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        }
+      }
+    },
+    "environmental": {
+      "category_name": "\ud83c\udf21\ufe0f Environmental & Conditions Indicators",
+      "indicators": {
+        "air_density_calculation": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "altitude_power_correction": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "wind_penalty_estimation": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "cda_calculation": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        }
+      }
+    },
+    "cyclist_profiling": {
+      "category_name": "\ud83e\udde0 Cyclist Profile & Analysis",
+      "indicators": {
+        "cyclist_type_classification": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "biomech_posture_efficiency": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "equipment_impact_estimation": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        },
+        "energy_fatigue_accumulation": {
+          "status": "unknown",
+          "files": [],
+          "implementation": ""
+        }
+      }
+    }
+  }
+}

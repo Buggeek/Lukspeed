@@ -1,0 +1,1412 @@
+{
+  "environmental": [
+    {
+      "file": "src/__tests__/config.test.ts",
+      "pattern": "wind",
+      "context": "import { configResolver } from '@/services/ConfigResolver';\nimport { supabase } from '@/lib/supabase';\n\n// Mock Supabase\njest.mock('@/lib/supabase', () => ({\n  supabase: {\n    rpc: jest.fn(),\n    from..."
+    },
+    {
+      "file": "src/hooks/useActivityData.ts",
+      "pattern": "altitude",
+      "context": "import { useState, useEffect } from 'react';\nimport type { ActivityPoint } from '@/types/activity';\n\ninterface UseActivityDataProps {\n  activityId?: string;\n}\n\ninterface UseActivityDataReturn {\n  acti..."
+    },
+    {
+      "file": "src/hooks/useAuth.ts",
+      "pattern": "wind",
+      "context": "import { useState, useEffect } from 'react';\nimport { User } from '@supabase/supabase-js';\nimport { supabase } from '@/lib/supabase';\nimport { logger } from '@/services/Logger';\n\ninterface UserProfile..."
+    },
+    {
+      "file": "src/hooks/useErrorTracking.ts",
+      "pattern": "wind",
+      "context": "import { useEffect } from 'react';\nimport { logger } from '@/services/Logger';\nimport { networkInterceptor } from '@/services/NetworkInterceptor';\n\nexport function useErrorTracking() {\n  useEffect(() ..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "altitude",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useOnboardingAlerts.ts",
+      "pattern": "wind",
+      "context": "import { useState, useEffect } from 'react';\nimport { useAuth } from '@/hooks/useAuth';\nimport { configResolver } from '@/services/ConfigResolver';\nimport { supabase } from '@/lib/supabase';\n\ninterfac..."
+    },
+    {
+      "file": "src/hooks/usePhysicalPower.ts",
+      "pattern": "air.*density",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { PhysicalPowerService, type PhysicalPowerAnalysis } from '@/services/PhysicalPowerService';\nimport type { ActivityPoint } from '@/type..."
+    },
+    {
+      "file": "src/lib/utils.ts",
+      "pattern": "wind",
+      "context": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n"
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "altitude",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "wind",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "temperature",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/IngestValidator.ts",
+      "pattern": "altitude",
+      "context": "import { configResolver } from './ConfigResolver';\nimport { supabase } from '@/lib/supabase';\nimport { Logger } from './Logger';\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n ..."
+    },
+    {
+      "file": "src/services/IngestValidator.ts",
+      "pattern": "temperature",
+      "context": "import { configResolver } from './ConfigResolver';\nimport { supabase } from '@/lib/supabase';\nimport { Logger } from './Logger';\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n ..."
+    },
+    {
+      "file": "src/services/Logger.ts",
+      "pattern": "wind",
+      "context": "export enum LogLevel {\n  DEBUG = 0,\n  INFO = 1,\n  WARN = 2,\n  ERROR = 3,\n  FATAL = 4\n}\n\ninterface LogEntry {\n  id: string;\n  timestamp: string;\n  level: LogLevel;\n  category: string;\n  message: string..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "environmental",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "altitude",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "wind",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/NetworkInterceptor.ts",
+      "pattern": "wind",
+      "context": "import { logger } from './Logger';\n\ninterface RequestLog {\n  id: string;\n  url: string;\n  method: string;\n  headers: Record<string, string>;\n  body?: any;\n  timestamp: string;\n}\n\ninterface ResponseLog..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "environmental",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "air.*density",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "altitude",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "wind",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "temperature",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "environmental",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "altitude",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "temperature",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "wind",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/bikes.ts",
+      "pattern": "wind",
+      "context": "export interface BikeComponent {\n  id: string;\n  type: 'frame' | 'fork' | 'wheels' | 'groupset' | 'cockpit' | 'contact' | 'drivetrain';\n  category: string;\n  brand: string;\n  model: string;\n  specific..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "environmental",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "wind",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "temperature",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "altitude",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "temperature",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "altitude",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "wind",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "environmental",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "air.*density",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "wind",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "temperature",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "air.*density",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "wind",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "torque": [
+    {
+      "file": "src/hooks/useActivityData.ts",
+      "pattern": "torque",
+      "context": "import { useState, useEffect } from 'react';\nimport type { ActivityPoint } from '@/types/activity';\n\ninterface UseActivityDataProps {\n  activityId?: string;\n}\n\ninterface UseActivityDataReturn {\n  acti..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "torque",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "torque",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "torque",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "torque",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    }
+  ],
+  "cadence": [
+    {
+      "file": "src/hooks/useActivityData.ts",
+      "pattern": "cadence",
+      "context": "import { useState, useEffect } from 'react';\nimport type { ActivityPoint } from '@/types/activity';\n\ninterface UseActivityDataProps {\n  activityId?: string;\n}\n\ninterface UseActivityDataReturn {\n  acti..."
+    },
+    {
+      "file": "src/hooks/useActivityData.ts",
+      "pattern": "\\brpm\\b",
+      "context": "import { useState, useEffect } from 'react';\nimport type { ActivityPoint } from '@/types/activity';\n\ninterface UseActivityDataProps {\n  activityId?: string;\n}\n\ninterface UseActivityDataReturn {\n  acti..."
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "cadence",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/IngestValidator.ts",
+      "pattern": "cadence",
+      "context": "import { configResolver } from './ConfigResolver';\nimport { supabase } from '@/lib/supabase';\nimport { Logger } from './Logger';\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n ..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "cadence",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "cadence",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "\\brpm\\b",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "cadence",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "cadence",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "cadence",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "\\brpm\\b",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "cadence",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "efficiency": [
+    {
+      "file": "src/hooks/useActivityData.ts",
+      "pattern": "efficiency",
+      "context": "import { useState, useEffect } from 'react';\nimport type { ActivityPoint } from '@/types/activity';\n\ninterface UseActivityDataProps {\n  activityId?: string;\n}\n\ninterface UseActivityDataReturn {\n  acti..."
+    },
+    {
+      "file": "src/hooks/useEfficiency.ts",
+      "pattern": "efficiency",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { EfficiencyCurveService, type EfficiencyAnalysis } from '@/services/EfficiencyCurveService'..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "efficiency",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "efficiency",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/services/EfficiencyCurveService.ts",
+      "pattern": "efficiency",
+      "context": "import type { ActivityPoint } from '@/types/activity';\n\nexport interface EfficiencyRange {\n  rango_velocidad: string;\n  eficiencia: number;\n  muestras: number;\n  velocidad_media: number;\n  potencia_me..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "efficiency",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "speed.*per.*watt",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "efficiency",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "efficiency",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/bikes.ts",
+      "pattern": "efficiency",
+      "context": "export interface BikeComponent {\n  id: string;\n  type: 'frame' | 'fork' | 'wheels' | 'groupset' | 'cockpit' | 'contact' | 'drivetrain';\n  category: string;\n  brand: string;\n  model: string;\n  specific..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "efficiency",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "efficiency",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "efficiency",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "efficiency",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "efficiency",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "efficiency",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "efficiency",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ],
+  "cardiac": [
+    {
+      "file": "src/hooks/useActivityData.ts",
+      "pattern": "heart.*rate",
+      "context": "import { useState, useEffect } from 'react';\nimport type { ActivityPoint } from '@/types/activity';\n\ninterface UseActivityDataProps {\n  activityId?: string;\n}\n\ninterface UseActivityDataReturn {\n  acti..."
+    },
+    {
+      "file": "src/hooks/useMLPredictions.ts",
+      "pattern": "drift",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport type { \n  MLPrediction, \n  TrainingLoa..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "heart.*rate",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "\\bhr\\b",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "heart.*rate",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "heart.*rate",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/IngestValidator.ts",
+      "pattern": "heart.*rate",
+      "context": "import { configResolver } from './ConfigResolver';\nimport { supabase } from '@/lib/supabase';\nimport { Logger } from './Logger';\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n ..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "heart.*rate",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "drift",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "heart.*rate",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "\\bhr\\b",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "heart.*rate",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "heart.*rate",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/mlModels.ts",
+      "pattern": "heart.*rate",
+      "context": "export interface MLModelConfig {\n  model_name: string;\n  version: string;\n  algorithm: 'linear_regression' | 'polynomial' | 'exponential_decay' | 'k_means';\n  parameters: Record<string, any>;\n  traini..."
+    },
+    {
+      "file": "src/types/mlModels.ts",
+      "pattern": "drift",
+      "context": "export interface MLModelConfig {\n  model_name: string;\n  version: string;\n  algorithm: 'linear_regression' | 'polynomial' | 'exponential_decay' | 'k_means';\n  parameters: Record<string, any>;\n  traini..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "cardiac",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "drift",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "heart.*rate",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "heart.*rate",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "\\bhr\\b",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "heart.*rate",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "\\bhr\\b",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "drift",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "ftp": [
+    {
+      "file": "src/hooks/useAuth.ts",
+      "pattern": "ftp",
+      "context": "import { useState, useEffect } from 'react';\nimport { User } from '@supabase/supabase-js';\nimport { supabase } from '@/lib/supabase';\nimport { logger } from '@/services/Logger';\n\ninterface UserProfile..."
+    },
+    {
+      "file": "src/hooks/useMLPredictions.ts",
+      "pattern": "ftp",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport type { \n  MLPrediction, \n  TrainingLoa..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "ftp",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "ftp",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "ftp",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "ftp",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "ftp",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "threshold.power",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "ftp",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/mlModels.ts",
+      "pattern": "ftp",
+      "context": "export interface MLModelConfig {\n  model_name: string;\n  version: string;\n  algorithm: 'linear_regression' | 'polynomial' | 'exponential_decay' | 'k_means';\n  parameters: Record<string, any>;\n  traini..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "ftp",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "twenty.min",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "ftp",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "threshold.power",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/auth.ts",
+      "pattern": "ftp",
+      "context": "// Authentication utilities for LukSpeed\nexport const isStravaConnected = (): boolean => {\n  return localStorage.getItem('strava_connected') === 'true';\n};\n\nexport const disconnectStrava = (): void =>..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "ftp",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "ftp",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ],
+  "tss": [
+    {
+      "file": "src/hooks/useMLPredictions.ts",
+      "pattern": "\\btss\\b",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport type { \n  MLPrediction, \n  TrainingLoa..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "\\btss\\b",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "training.stress",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "stress.score",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "training.stress",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "stress.score",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "\\btss\\b",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "training.stress",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "stress.score",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "stress.score",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "training.stress",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "stress.score",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "training.stress",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "stress.score",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/mlModels.ts",
+      "pattern": "\\btss\\b",
+      "context": "export interface MLModelConfig {\n  model_name: string;\n  version: string;\n  algorithm: 'linear_regression' | 'polynomial' | 'exponential_decay' | 'k_means';\n  parameters: Record<string, any>;\n  traini..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "\\btss\\b",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "training.stress",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "stress.score",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "stress.score",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "training.stress",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "stress.score",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "\\btss\\b",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "training.stress",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "stress.score",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ],
+  "normalized_power": [
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "normalized.power",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "norm.*power",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "normalized.power",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "\\bnp\\b",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "norm.*power",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "normalized.power",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "norm.*power",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "normalized.power",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "norm.*power",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "normalized.power",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "\\bnp\\b",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "norm.*power",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "normalized.power",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "norm.*power",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "normalized.power",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "\\bnp\\b",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "norm.*power",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ],
+  "intensity_factor": [
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "intensity.factor",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "intensity.factor",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/services/ConfigResolver.ts",
+      "pattern": "if.*ratio",
+      "context": "import { supabase } from '@/lib/supabase';\n\ninterface LogContext {\n  [key: string]: unknown;\n}\n\nclass SimpleLogger {\n  constructor(private context: string) {}\n  \n  info(message: string, data?: LogCont..."
+    },
+    {
+      "file": "src/services/EfficiencyCurveService.ts",
+      "pattern": "if.*ratio",
+      "context": "import type { ActivityPoint } from '@/types/activity';\n\nexport interface EfficiencyRange {\n  rango_velocidad: string;\n  eficiencia: number;\n  muestras: number;\n  velocidad_media: number;\n  potencia_me..."
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/FittingCalculator.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "import { AnthropometricProfile } from '@/types/profile';\nimport { BikeFitting, FittingCalculations } from '@/types/fitting';\n\nexport interface FittingFormula {\n  name: string;\n  description: string;\n ..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "if.*ratio",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "if.*ratio",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "intensity.factor",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "intensity.factor",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "intensity.factor",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "intensity.factor",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "intensity.factor",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "\\bif\\b.*power",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "if.*ratio",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ],
+  "power_zones": [
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "power.*zone",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "zone.*distribution",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "power.*zone",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "coggan.*zone",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "power.*zone",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "zone.*distribution",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "coggan.*zone",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "power.*zone",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "zone.*distribution",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "power.*zone",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "zone.*distribution",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "coggan.*zone",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "power.*zone",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "aerodynamic": [
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "aero.*efficiency",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/usePhysicalPower.ts",
+      "pattern": "aerodynamic",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { PhysicalPowerService, type PhysicalPowerAnalysis } from '@/services/PhysicalPowerService';\nimport type { ActivityPoint } from '@/type..."
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "pattern": "\\bcda\\b",
+      "context": "import { createClient } from '@supabase/supabase-js';\n\nconst supabaseUrl = 'https://tebrbispkzjtlilpquaz.supabase.co';\nconst supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF..."
+    },
+    {
+      "file": "src/services/FittingCalculator.ts",
+      "pattern": "aerodynamic",
+      "context": "import { AnthropometricProfile } from '@/types/profile';\nimport { BikeFitting, FittingCalculations } from '@/types/fitting';\n\nexport interface FittingFormula {\n  name: string;\n  description: string;\n ..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "aerodynamic",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "\\bcda\\b",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "drag.*coefficient",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "aero.*efficiency",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "aerodynamic",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "drag.*coefficient",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "aero.*efficiency",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/bikes.ts",
+      "pattern": "aerodynamic",
+      "context": "export interface BikeComponent {\n  id: string;\n  type: 'frame' | 'fork' | 'wheels' | 'groupset' | 'cockpit' | 'contact' | 'drivetrain';\n  category: string;\n  brand: string;\n  model: string;\n  specific..."
+    },
+    {
+      "file": "src/types/bikes.ts",
+      "pattern": "aero.*efficiency",
+      "context": "export interface BikeComponent {\n  id: string;\n  type: 'frame' | 'fork' | 'wheels' | 'groupset' | 'cockpit' | 'contact' | 'drivetrain';\n  category: string;\n  brand: string;\n  model: string;\n  specific..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "aerodynamic",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "aero.*efficiency",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "aerodynamic",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "\\bcda\\b",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "drag.*coefficient",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "aero.*efficiency",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "aerodynamic",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "aero.*efficiency",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "balance": [
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/hooks/useOnboardingAlerts.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { useState, useEffect } from 'react';\nimport { useAuth } from '@/hooks/useAuth';\nimport { configResolver } from '@/services/ConfigResolver';\nimport { supabase } from '@/lib/supabase';\n\ninterfac..."
+    },
+    {
+      "file": "src/hooks/usePhysicalPower.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { PhysicalPowerService, type PhysicalPowerAnalysis } from '@/services/PhysicalPowerService';\nimport type { ActivityPoint } from '@/type..."
+    },
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/services/EfficiencyCurveService.ts",
+      "pattern": "l.*r.*power",
+      "context": "import type { ActivityPoint } from '@/types/activity';\n\nexport interface EfficiencyRange {\n  rango_velocidad: string;\n  eficiencia: number;\n  muestras: number;\n  velocidad_media: number;\n  potencia_me..."
+    },
+    {
+      "file": "src/services/FitFileService.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { supabase } from '@/lib/supabase';\nimport { StravaActivity, FitFileData, ActivityStream } from '@/types/activity';\nimport { Logger } from './Logger';\n\nclass FitFileService {\n  private logger =..."
+    },
+    {
+      "file": "src/services/FittingCalculator.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { AnthropometricProfile } from '@/types/profile';\nimport { BikeFitting, FittingCalculations } from '@/types/fitting';\n\nexport interface FittingFormula {\n  name: string;\n  description: string;\n ..."
+    },
+    {
+      "file": "src/services/IngestValidator.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { configResolver } from './ConfigResolver';\nimport { supabase } from '@/lib/supabase';\nimport { Logger } from './Logger';\n\ninterface ValidationResult {\n  isValid: boolean;\n  errors: string[];\n ..."
+    },
+    {
+      "file": "src/services/MetricsCalculator.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { TimelineDataPoint, TimelineAlert, SmoothingOptions } from '@/types/timeline';\n\nexport class MetricsCalculator {\n  /**\n   * Calculate acceleration from velocity data\n   * a(t) = (v(t) - v(t-1)..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "l.*r.*power",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "l.*r.*power",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "balance",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "l.*r.*power",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/bikes.ts",
+      "pattern": "l.*r.*power",
+      "context": "export interface BikeComponent {\n  id: string;\n  type: 'frame' | 'fork' | 'wheels' | 'groupset' | 'cockpit' | 'contact' | 'drivetrain';\n  category: string;\n  brand: string;\n  model: string;\n  specific..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "balance",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "left.*right",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "balance",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/index.ts",
+      "pattern": "left.*right",
+      "context": "export interface User {\n  id: string;\n  email?: string;\n  name?: string;\n  avatar_url?: string;\n  strava_id?: string;\n  strava_access_token?: string;\n  strava_refresh_token?: string;\n  strava_token_ex..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "balance",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "l.*r.*power",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "left.*right",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/types/timeline.ts",
+      "pattern": "l.*r.*power",
+      "context": "export interface TimelineDataPoint {\n  timestamp: number; // seconds from start\n  power: number; // watts\n  speed: number; // km/h\n  cadence: number; // rpm\n  heartrate: number; // bpm\n  altitude: num..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "balance",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "left.*right",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "l.*r.*power",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "balance",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "l.*r.*power",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "balance",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "l.*r.*power",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ],
+  "biomechanical": [
+    {
+      "file": "src/hooks/useMetrics.ts",
+      "pattern": "variability",
+      "context": "import { useState, useCallback, useEffect } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { ActivityMetrics, ActivityStream, UserTrainingSettings } from '@/types/activity';\nimport { ..."
+    },
+    {
+      "file": "src/services/FittingCalculator.ts",
+      "pattern": "stability",
+      "context": "import { AnthropometricProfile } from '@/types/profile';\nimport { BikeFitting, FittingCalculations } from '@/types/fitting';\n\nexport interface FittingFormula {\n  name: string;\n  description: string;\n ..."
+    },
+    {
+      "file": "src/services/PhysicalPowerService.ts",
+      "pattern": "stability",
+      "context": "import type { ActivityPoint } from '@/types/activity';\nimport type { UserProfile } from '@/types/profile';\n\nexport interface PhysicalPowerComponents {\n  power_aero: number[];      // Aerodynamic power..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "variability",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "biomechanical",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "variability",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/mlModels.ts",
+      "pattern": "stability",
+      "context": "export interface MLModelConfig {\n  model_name: string;\n  version: string;\n  algorithm: 'linear_regression' | 'polynomial' | 'exponential_decay' | 'k_means';\n  parameters: Record<string, any>;\n  traini..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "variability",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "biomechanical",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "biomechanical",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "variability",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "w_prime": [
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/activity.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "export interface ActivityStream {\n  id: string;\n  activity_id: string;\n  user_id: string;\n  timestamp_offset: number; // seconds from start\n  \n  // Power data\n  power?: number; // watts\n  power_3s?: n..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "w.prime",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "w.prime",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "wprime",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "anaerobic.*capacity",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    }
+  ],
+  "power_curve": [
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "power.*curve",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/hooks/usePowerCurve.ts",
+      "pattern": "critical.power",
+      "context": "import { useState, useEffect, useCallback } from 'react';\nimport { supabase } from '@/lib/supabase';\nimport { MLPredictor } from '@/services/MLPredictor';\nimport { ZoneCalculator } from '@/services/Zo..."
+    },
+    {
+      "file": "src/services/ZoneCalculator.ts",
+      "pattern": "power.*curve",
+      "context": "import { supabase } from '@/lib/supabase';\nimport type { TrainingZone, TrainingZones } from '@/types/powerAnalysis';\n\nexport class ZoneCalculator {\n  private static instance: ZoneCalculator;\n  \n  publ..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "power.*curve",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "critical.power",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/advanced-metrics.ts",
+      "pattern": "peak.*power",
+      "context": "// Advanced Cycling Metrics Types - Phase 1 Implementation\nexport interface VO2MaxAnalysis {\n  estimated_vo2_max: number;\n  vo2_at_threshold: number;\n  aerobic_capacity_score: 'excellent' | 'good' | '..."
+    },
+    {
+      "file": "src/types/enhanced.ts",
+      "pattern": "power.*curve",
+      "context": "// Enhanced type definitions for LukSpeed v2.0\nexport interface AdvancedMetrics {\n  normalized_power: number;\n  intensity_factor: number;\n  training_stress_score: number;\n  variability_index: number;\n..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "power.*curve",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/types/powerAnalysis.ts",
+      "pattern": "critical.power",
+      "context": "export interface PowerCurveData {\n  duration_5s?: number;\n  duration_15s?: number;\n  duration_1min?: number;\n  duration_5min?: number;\n  duration_20min?: number;\n  duration_60min?: number;\n  critical_..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "power.*curve",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "critical.power",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/advanced-calculations.ts",
+      "pattern": "peak.*power",
+      "context": "// Advanced Cycling Calculations - Phase 1 Implementation\nimport type { \n  VO2MaxAnalysis, \n  ThresholdAnalysis, \n  HRVAnalysis, \n  BiomechanicalAnalysis,\n  AerodynamicAnalysis,\n  PowerDurationCurveAd..."
+    },
+    {
+      "file": "src/utils/cycling-calculations.ts",
+      "pattern": "peak.*power",
+      "context": "// Advanced Cycling Calculations - Implementation of all 50 metrics from David's analysis\nimport { BaseVariables, DerivedMetrics, AnalysisIndicators, PowerBreakdown, ClimbingAnalysis, EfficiencyTrends..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "power.*curve",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    },
+    {
+      "file": "src/utils/predictive-models.ts",
+      "pattern": "best.*effort",
+      "context": "// Advanced Predictive Models for LukSpeed Analytics\nimport type { Activity } from '@/types';\n\n// Training Load Models (CTL/ATL/TSB)\nexport interface TrainingLoadMetrics {\n  ctl: number; // Chronic Tr..."
+    }
+  ]
+}
